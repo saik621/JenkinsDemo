@@ -7,14 +7,14 @@ node{
         httpMode: methodreq,
         responseHandle: 'NONE', 
         url: myUrl
-        body: content2
+        requestBody: content2
     }
     stage('Get')
     {
         def resp = httpdemo('GET', 'https://jirademos.atlassian.net/rest/api/latest/issue/testissue')
     }
     stage('post'){
-        def content1 = '{
+        def content1 = '''\'{
   "update": {
     "worklog": [
       {
@@ -91,7 +91,7 @@ node{
       "id": "5b109f2e9729b51b54dc274d"
     }
   }
-}'
+}\''''
         def resp = httpdemo('POST', 'https://jirademos.atlassian.net/rest/api/latest/issue/', content1)
     }
     stage('put'){
