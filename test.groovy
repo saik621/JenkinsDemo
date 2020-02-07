@@ -1,29 +1,100 @@
 node{
-    stage('Get')
+    
+    def httpdemo(String methodreq, String myUrl, String content2)
     {
         httpRequest acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
-        customHeaders: [[maskValue: true, name: 'Basic', value: 'Sometext']],
-        httpMode: 'GET',
+        httpMode: methodreq,
         responseHandle: 'NONE', 
-        url: 'http://dummy.restapiexample.com/api/v1/employees'
+        url: myUrl
+        body: content2
+    }
+    stage('Get')
+    {
+        def resp = httpdemo('GET', 'https://jirademos.atlassian.net/rest/api/latest/issue/testissue')
     }
     stage('post'){
-        httpRequest acceptType: 'APPLICATION_JSON',
-        contentType: 'APPLICATION_JSON',
-        customHeaders: [[maskValue: true, name: 'Basic', value: 'Sometext']],
-        httpMode: 'POST',
-        requestBody: '{"name":"test","salary":"123","age":"23"}', 
-        responseHandle: 'NONE',
-        url: 'http://dummy.restapiexample.com/api/v1/create'
+        def content1 = '{
+  "update": {
+    "worklog": [
+      {
+        "add": {
+          "timeSpent": "60m",
+          "started": "2019-07-05T11:05:00.000+0000"
+        }
+      }
+    ]
+  },
+  "fields": {
+    "summary": "Main order flow broken",
+    "parent": {
+      "key": "PROJ-123"
+    },
+    "issuetype": {
+      "id": "10000"
+    },
+    "components": [
+      {
+        "id": "10000"
+      }
+    ],
+    "customfield_20000": "06/Jul/19 3:25 PM",
+    "customfield_40000": "Occurs on all orders",
+    "customfield_70000": [
+      "jira-administrators",
+      "jira-software-users"
+    ],
+    "project": {
+      "id": "10000"
+    },
+    "description": "Order entry fails when selecting supplier.",
+    "reporter": {
+      "id": "5b10a2844c20165700ede21g"
+    },
+    "fixVersions": [
+      {
+        "id": "10001"
+      }
+    ],
+    "customfield_10000": "09/Jun/19",
+    "priority": {
+      "id": "20000"
+    },
+    "labels": [
+      "bugfix",
+      "blitz_test"
+    ],
+    "timetracking": {
+      "remainingEstimate": "5",
+      "originalEstimate": "10"
+    },
+    "customfield_30000": [
+      "10000",
+      "10002"
+    ],
+    "customfield_80000": {
+      "value": "red"
+    },
+    "security": {
+      "id": "10000"
+    },
+    "environment": "UAT",
+    "versions": [
+      {
+        "id": "10000"
+      }
+    ],
+    "duedate": "2019-03-11T00:00:00.000Z",
+    "customfield_60000": "jira-software-users",
+    "customfield_50000": "Could impact day-to-day work.",
+    "assignee": {
+      "id": "5b109f2e9729b51b54dc274d"
+    }
+  }
+}'
+        def resp = httpdemo('POST', 'https://jirademos.atlassian.net/rest/api/latest/issue/', content1)
     }
     stage('put'){
-        httpRequest acceptType: 'APPLICATION_JSON',
-        contentType: 'APPLICATION_JSON',
-        customHeaders: [[maskValue: true, name: 'Basic', value: 'Sometext']],
-        httpMode: 'PUT',
-        requestBody: '{"name":"test1","salary":"1123","age":"23"}', 
-        responseHandle: 'NONE',
-        url: 'http://dummy.restapiexample.com/api/v1/update/21'
+      def resp = httpdemo('PUT', 'https://jirademos.atlassian.net/rest/api/latest/issue/', content1)
     }
 }
