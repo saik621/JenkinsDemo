@@ -1,13 +1,14 @@
 node{
     
-    def httpdemo(String methodreq, String myUrl, String content2)
+    def httpdemo(String methodreq1, String myUrl1, String content2)
     {
-        httpRequest acceptType: 'APPLICATION_JSON',
+        def test = httpRequest acceptType: 'APPLICATION_JSON',
         contentType: 'APPLICATION_JSON',
-        httpMode: methodreq,
+        httpMode: methodreq1,
         responseHandle: 'NONE', 
-        url: myUrl
+        url: myUrl1
         requestBody: content2
+        return test
     }
     stage('Get')
     {
