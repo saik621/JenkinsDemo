@@ -17,4 +17,13 @@ node{
         responseHandle: 'NONE',
         url: 'http://dummy.restapiexample.com/api/v1/create'
     }
+    stage('put'){
+        httpRequest acceptType: 'APPLICATION_JSON',
+        contentType: 'APPLICATION_JSON',
+        customHeaders: [[maskValue: true, name: 'Basic', value: 'Sometext']],
+        httpMode: 'PUT',
+        requestBody: '{"name":"test1","salary":"1123","age":"23"}', 
+        responseHandle: 'NONE',
+        url: 'http://dummy.restapiexample.com/api/v1/update/21'
+    }
 }
